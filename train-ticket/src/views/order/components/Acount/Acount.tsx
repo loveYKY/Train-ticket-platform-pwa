@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {memo, useContext, useState} from 'react';
 import './Acount.scss';
 import classNames from 'classnames';
 import {orderContext} from '../../index';
@@ -7,7 +7,7 @@ interface acountProps {
     length: number;
 }
 
-const Acount: React.FC<acountProps> = props => {
+const Acount: React.FC<acountProps> = memo(props => {
     const {price = 0, length} = props;
     const {dispatch, ...orderState} = useContext(orderContext);
     const [expanded, setExpanded] = useState<boolean>(false);
@@ -55,6 +55,6 @@ const Acount: React.FC<acountProps> = props => {
             </div>
         </div>
     );
-};
+});
 
 export default Acount;

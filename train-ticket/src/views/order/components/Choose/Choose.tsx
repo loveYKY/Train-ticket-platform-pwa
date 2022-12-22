@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React, {memo, useContext} from 'react';
 import './Choose.scss';
 import {orderContext} from '../../index';
 import classNames from 'classnames';
 interface chooseProps {}
 
-const Choose: React.FC<chooseProps> = props => {
+const Choose: React.FC<chooseProps> = memo(props => {
     const {dispatch, ...orderState} = useContext(orderContext);
 
     const changeSeatStatus = (seatLine: number, seatPosition: string) => {
@@ -104,6 +104,6 @@ const Choose: React.FC<chooseProps> = props => {
             </div>
         </div>
     );
-};
+});
 
 export default Choose;
