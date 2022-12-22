@@ -5,9 +5,10 @@ import { Header } from "../../components/header/header";
 import { DepartDate } from "./components/DepartDate/DepartDate";
 import { HighSpeed } from "./components/HighSpeed/HighSpeed";
 import { Journey } from "./components/Journey/Journey";
-import { Submit } from "./components/Submit/Submit";
 import { CitySelector } from "../../components/CitySelector/CitySelector";
+import { DateSelector } from "../../components/DateSelector/DateSelector";
 import { fetchUrl } from "../../constant";
+import { useNavigate } from "react-router";
 export interface mainProps {}
 
 export interface MainStateInterFace {
@@ -63,6 +64,7 @@ export const Main: React.FC<mainProps> = (props) => {
     if (mainState.cityData == null) {
       fetchCityData();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //展示城市选择浮层
@@ -115,10 +117,42 @@ export const Main: React.FC<mainProps> = (props) => {
         ...mainState,
         isDateSelectorVisible: visible,
       });
-      console.log(mainState);
     },
     [mainState]
   );
+
+  //选中日期的回调事件
+  const onSelectDay = useCallback(
+    (day: number) => {
+      //修改日期和关闭日期选择浮层
+      setMainState({
+        ...mainState,
+        isDateSelectorVisible: false,
+        departDate: day,
+      });
+    },
+    [mainState]
+  );
+
+  //选中高铁按钮点击回调
+  const selectHighSpeed = useCallback(
+    (bol: boolean) => {
+      setMainState({
+        ...mainState,
+        highSpeed: bol,
+      });
+    },
+    [mainState]
+  );
+
+  //点击搜索按钮事件
+  const navigator = useNavigate();
+  const searchSubmit = () => {
+    //路由跳转传参
+    navigator("/query", {
+      state: mainState,
+    });
+  };
 
   return (
     <div>
@@ -136,7 +170,18 @@ export const Main: React.FC<mainProps> = (props) => {
           time={mainState.departDate}
           showDepartDate={showDateSelector}
         ></DepartDate>
+        {/* 是否选择高铁 */}
+        <HighSpeed
+          highSpeed={mainState.highSpeed}
+          toggle={selectHighSpeed}
+        ></HighSpeed>
+        <div className="submit">
+          <button className="submit-button" onClick={searchSubmit}>
+            搜索
+          </button>
+        </div>
       </div>
+      {/* 城市选择浮层 */}
       {mainState.isCitySelectorVisible && (
         <CitySelector
           cityData={mainState.cityData}
@@ -149,6 +194,18 @@ export const Main: React.FC<mainProps> = (props) => {
           }}
           onSelect={handleCitySelect}
         ></CitySelector>
+      )}
+      {/* 日期选择浮层 */}
+      {mainState.isDateSelectorVisible && (
+        <DateSelector
+          onSelect={onSelectDay}
+          closeDateSelector={() => {
+            setMainState({
+              ...mainState,
+              isDateSelectorVisible: false,
+            });
+          }}
+        ></DateSelector>
       )}
     </div>
   );

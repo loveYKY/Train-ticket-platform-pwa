@@ -1,19 +1,20 @@
 import React from "react";
 import "./header.scss";
-import { useStore } from "../../views/main/store/useStore";
 
 export interface headerProps {
-  //路由跳转的目的地
-  url?: string;
   //标题
-  title?: string;
+  title: string;
+  //点击返回按钮事件
+  onBack?: () => void;
 }
 
 export const Header: React.FC<headerProps> = (props) => {
-  const { url, title } = props;
+  const { title, onBack } = props;
 
   const handleClick = () => {
-
+    if (onBack) {
+      onBack();
+    }
   };
   return (
     <div className="header">

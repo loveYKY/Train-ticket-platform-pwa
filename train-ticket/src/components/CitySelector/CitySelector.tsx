@@ -66,6 +66,7 @@ export const CitySelector: React.FC<CitySelectorProps> = memo((props) => {
   const onBack = () => {
     closeCitySelector(false);
   };
+  
   return (
     <div className="city-selector">
       <div className="city-search">

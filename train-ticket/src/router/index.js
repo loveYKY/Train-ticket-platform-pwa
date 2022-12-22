@@ -1,4 +1,7 @@
 import { Main } from "../views/main";
+import { QueryPage } from "../views/query";
+import { TicketPage } from "../views/tickets";
+import { Order } from "@/views/order";
 import { Navigate } from "react-router-dom";
 
 export const routes = [
@@ -8,6 +11,18 @@ export const routes = [
   },
   {
     path: "/main",
-    element: <Main></Main>
+    element: <Main></Main>,
+  },
+  {
+    path: "/query",
+    element: <QueryPage></QueryPage>,
+  },
+  {
+    path: "/tickets",
+    element: <TicketPage></TicketPage>,
+  },
+  {
+    path: "/order",
+    element: <Order></Order>,
   },
 ];
