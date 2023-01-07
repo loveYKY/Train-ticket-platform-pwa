@@ -12,7 +12,8 @@ import {clientsClaim} from 'workbox-core';
 import {ExpirationPlugin} from 'workbox-expiration';
 import {precacheAndRoute, createHandlerBoundToURL} from 'workbox-precaching';
 import {registerRoute} from 'workbox-routing';
-import {StaleWhileRevalidate} from 'workbox-strategies';
+import {StaleWhileRevalidate, NetworkFirst, CacheFirst} from 'workbox-strategies';
+import {CacheableResponsePlugin} from 'workbox-cacheable-response';
 import {fetchUrl} from './constant/index';
 declare const self: ServiceWorkerGlobalScope;
 var CACHE_NAME = 'my-first-sw';
@@ -79,58 +80,74 @@ self.addEventListener('message', event => {
 });
 
 // Any other custom service worker logic can go here.
+registerRoute(
+    ({url})=> {
+        if(url.pathname === '/rest/cities') {
+            return true
+        }
+    },
+    new CacheFirst({
+        // Put all cached files in a cache named 'pages'
+        cacheName: 'cities',
+        plugins: [
+          // Ensure that only requests that result in a 200 status are cached
+          new CacheableResponsePlugin({
+            statuses: [200],
+          }),
+        ],
+      }),
+)
+// const cacheList = [fetchUrl + '/rest/cities'];
 
-const cacheList = [fetchUrl + '/rest/cities'];
+// self.addEventListener('install', event => {
+//     event.waitUntil(
+//         caches.open(CACHE_NAME).then(cache => {
+//             return cache.addAll(cacheList);
+//         }),
+//     );
+// });
+// //在fetch事件里能拦截网络请求，进行一些处理
+// self.addEventListener('fetch', function (event) {
+//     event.respondWith(
+//         fetch(event.request)
+//             .then(httpRes => {
+//               console.log('hello');
+//                 //如果请求失败，则返回缓存中的资源
+//                 if (!httpRes || (httpRes.status !== 200 && httpRes.status !== 304 && httpRes.type !== 'opaque')) {
+//                     return caches.match(event.request).then(response => {
+//                         if (response) {
+//                             console.log('请求失败，则返回缓存中的资源');
+//                             return response;
+//                         } else {
+//                             return httpRes;
+//                         }
+//                     });
+//                 }
+//                 //如果请求成功，则返回请求获得的数据
+//                 else {
+//                     console.log('请求成功');
+//                     // 请求成功的话，将请求缓存起来。
+//                     caches.open(CACHE_NAME).then(function (cache) {
+//                         cache.add(event.request);
+//                     });
 
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll(cacheList);
-        }),
-    );
-});
-//在fetch事件里能拦截网络请求，进行一些处理
-self.addEventListener('fetch', function (event) {
-    event.respondWith(
-        fetch(event.request)
-            .then(httpRes => {
-              console.log('hello');
-                //如果请求失败，则返回缓存中的资源
-                if (!httpRes || (httpRes.status !== 200 && httpRes.status !== 304 && httpRes.type !== 'opaque')) {
-                    return caches.match(event.request).then(response => {
-                        if (response) {
-                            console.log('请求失败，则返回缓存中的资源');
-                            return response;
-                        } else {
-                            return httpRes;
-                        }
-                    });
-                }
-                //如果请求成功，则返回请求获得的数据
-                else {
-                    console.log('请求成功');
-                    // 请求成功的话，将请求缓存起来。
-                    caches.open(CACHE_NAME).then(function (cache) {
-                        cache.add(event.request);
-                    });
-
-                    return httpRes;
-                }
-            })
-            //请求报错，返回缓存
-            .catch(error => {
-                console.log(22);
-                return caches.match(event.request).then(response => {
-                    if (response) {
-                        console.log('请求失败，则返回缓存中的资源');
-                        return response;
-                    } else {
-                        return error;
-                    }
-                });
-            }),
-    );
-});
+//                     return httpRes;
+//                 }
+//             })
+//             //请求报错，返回缓存
+//             .catch(error => {
+//                 console.log(22);
+//                 return caches.match(event.request).then(response => {
+//                     if (response) {
+//                         console.log('请求失败，则返回缓存中的资源');
+//                         return response;
+//                     } else {
+//                         return error;
+//                     }
+//                 });
+//             }),
+//     );
+// });
 
 //先发起网络请求
 
