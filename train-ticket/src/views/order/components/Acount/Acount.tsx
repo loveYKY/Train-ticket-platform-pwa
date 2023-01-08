@@ -17,7 +17,7 @@ const Acount: React.FC<acountProps> = memo(props => {
         let _IDRe18 = /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
         let birthday = /^(19|20)\d{2}(1[0-2]|0[1-9])(0[1-9]|[1-2][0-9]|3[0-1])$/;
         for (let passenger of orderState.passengers) {
-            console.log(_IDRe18.test(passenger.licenceNo));
+            // console.log(_IDRe18.test(passenger.licenceNo));
             if (passenger.licenceNo !== undefined && !_IDRe18.test(passenger.licenceNo)) {
                 window.alert('身份证号码有误，请检查');
                 return;
