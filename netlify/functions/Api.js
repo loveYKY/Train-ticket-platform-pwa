@@ -1205,7 +1205,7 @@ router.get("/rest/cities", (req, res) => {
   });
 });
 router.post("/rest/query", (req, res) => {
-  const response = {
+  let response = {
     msg: "操作成功",
     status: 0,
     dataMap: {
@@ -3013,8 +3013,8 @@ router.post("/rest/query", (req, res) => {
       cacheUserEnteredNewSearchPage: true,
     },
   };
-  response.dataMap.directTrainInfo.trains =
-    response.dataMap.directTrainInfo.trains.reverse();
+
+  response.dataMap.directTrainInfo.trains.reverse();
   return res.json(response);
 });
 router.get("/rest/ticket", (req, res) => {
