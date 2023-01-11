@@ -3,6 +3,7 @@ var cors = require("cors");
 const dayjs = require("dayjs");
 const serverless = require("serverless-http");
 const bodyParser = require('body-parser');
+const lodash = require('lodash')
 const app = express();
 const router = express.Router();
 app.use(cors());
@@ -3014,7 +3015,7 @@ router.post("/rest/query", (req, res) => {
     },
   };
 
-  response.dataMap.directTrainInfo.trains.reverse();
+  response.dataMap.directTrainInfo.trains = lodash.shuffle(response.dataMap.directTrainInfo.trains);
   return res.json(response);
 });
 router.get("/rest/ticket", (req, res) => {
