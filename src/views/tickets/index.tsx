@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {createContext, lazy, Suspense, useEffect, useState} from 'react';
 import './index.scss';
 import {dataStateInterface} from './constant/index';
-import {useLocation, useNavigate} from 'react-router';
+import {useLocation} from 'react-router';
 import moment from 'moment';
 import {fetchUrl} from '../../constant';
 import {Header} from '@/components/header/header';

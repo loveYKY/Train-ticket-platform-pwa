@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {createContext, useEffect} from 'react';
 import {useLocation} from 'react-router';
 import {Header} from '@/components/header/header';
 import Passengers from './components/Passengers/Passengers';
 import './index.scss';
 import {useStore} from './Store/useStore';
-import {orderStateType, actionType, passenger} from './contant/index';
+import {orderStateType, actionType} from './contant/index';
 import {Detail} from '@/components/Detail/Detail';
 import Choose from './components/Choose/Choose';
 import Acount from './components/Acount/Acount';

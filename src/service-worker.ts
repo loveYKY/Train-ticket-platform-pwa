@@ -12,11 +12,11 @@ import {clientsClaim} from 'workbox-core';
 import {ExpirationPlugin} from 'workbox-expiration';
 import {precacheAndRoute, createHandlerBoundToURL} from 'workbox-precaching';
 import {registerRoute} from 'workbox-routing';
-import {StaleWhileRevalidate, NetworkFirst, CacheFirst} from 'workbox-strategies';
+import {StaleWhileRevalidate, CacheFirst} from 'workbox-strategies';
 import {CacheableResponsePlugin} from 'workbox-cacheable-response';
-import {fetchUrl} from './constant/index';
+
 declare const self: ServiceWorkerGlobalScope;
-var CACHE_NAME = 'my-first-sw';
+// var CACHE_NAME = 'my-first-sw';
 
 clientsClaim();
 

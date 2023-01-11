@@ -1,8 +1,7 @@
-import React, { memo, useEffect, useMemo, useRef } from "react";
+import React, { memo, useMemo } from "react";
 import leftPad from "left-pad";
 import useWinSize from "@/hooks/useWinSize";
 import "./Slider.scss";
-import { throttle } from "lodash";
 interface SliderProps {
   title: string;
   timeStart: number;

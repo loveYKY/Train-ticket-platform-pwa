@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useEffect, useState } from "react";
 import "./Schedule.scss";
 import { fetchUrl } from "@/constant/index";

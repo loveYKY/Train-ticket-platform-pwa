@@ -11,7 +11,7 @@ interface Ipassenger {
 type passengerProps = Ipassenger & passenger;
 
 const Passenger: React.FC<passengerProps> = memo(props => {
-    const {id, licenceNo, name, seat, ticketType, gender, birthday, followAdult, showGenderMenu, showFollowAdultMenu} =
+    const {id, licenceNo, name, ticketType, gender, birthday, followAdult, showGenderMenu, showFollowAdultMenu} =
         props;
 
     const {dispatch, ...orderState} = useContext(orderContext);
